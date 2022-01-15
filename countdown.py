@@ -1,8 +1,5 @@
 
 
-#! /Library/Frameworks/Python.framework/Versions/3.6/bin/python3.6
-
-
 from baopig import *
 import pygame
 # pyapp.set_inapp_debugging()
@@ -11,7 +8,7 @@ import pygame
 class TimesUpScene(Scene):
     def __init__(self):
 
-        Scene.__init__(self, get_application())
+        Scene.__init__(self, app)
 
         Text(
             parent=self,
@@ -23,7 +20,7 @@ class TimesUpScene(Scene):
         )
 
         pygame.mixer.init()
-        self.beep = pygame.mixer.Sound("turn-off-sound.mp3")
+        self.beep = pygame.mixer.Sound("turn-off-sound.mp3")  # TODO : fix sound not played
 
         Button(
             parent=self,
@@ -63,17 +60,17 @@ class TimesUpScene(Scene):
                 app.set_display_mode(0)
             if event.key == pygame.K_SPACE:
                 # app.mainscene.countdown.start()
-                get_application().open("MainScene")
+                app.open("MainScene")
 
 
 class MainScene(Scene):
     def __init__(self):
 
-        get_application().set_caption("Programmer Countdown")
+        app.set_caption("Programmer Countdown")
 
         Scene.__init__(
             self,
-            get_application(),
+            app,
             background_color=(170, 170, 170)
         )
 
@@ -86,13 +83,13 @@ class MainScene(Scene):
             self.countdown.start()
 
         def end():
-            get_application().open("TimesUpScene")
+            app.open("TimesUpScene")
             print("YO")
         self.countdown = Timer(
             1,
             # PrefilledFunction(print, "End of countdown"),
             # display.enter_fullscreen_mode,
-            PrefilledFunction(get_application().open, "TimesUpScene"))
+            PrefilledFunction(app.open, "TimesUpScene"))
 
         self.pause_button = Button(
             parent=self,
